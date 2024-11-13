@@ -1,3 +1,5 @@
 const { registrar, leer } = require('./operaciones');
-registrar();
-leer();
+
+const argumentos = process.argv.slice(2);
+registrar(argumentos);
+//leer();
