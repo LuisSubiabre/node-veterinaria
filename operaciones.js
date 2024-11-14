@@ -1,16 +1,37 @@
 const fs = require('fs');
+const fileName = 'citas.json';
 
-const registrar = () => {
+const checkFile = () => {
+
+
+    if (!fs.existsSync(fileName)) {
+        // console.log('Archivo no encontrado, creando archivo');
+        fs.writeFileSync(fileName, '[]');
+    }
+
+}
+
+const registrar = (argumento) => {
+
+    checkFile();
+
+    const data = fs.readFileSync(fileName, 'utf-8');
+    const nuevoObjeto = JSON.parse(data);
+
     const animal = [
         {
-            nombre: 'Susuki',
-            edad: '1 año',
-            tipo: 'Perro',
-            color: 'Café',
-            enfermedad: 'Ninguna'
+            nombre: argumento[1],
+            edad: argumento[2],
+            tipo: argumento[3],
+            color: argumento[4],
+            enfermedad: argumento[5]
         }
     ]
-    fs.writeFile('citas.json', JSON.stringify(animal), (err) => {
+    console.log(animal);
+    nuevoObjeto.push(...animal);
+
+
+    fs.writeFileSync(fileName, JSON.stringify(nuevoObjeto), (err) => {
         if (err) {
             console.log(err);
         } else {
@@ -19,15 +40,15 @@ const registrar = () => {
     });
 }
 
+
+
 const leer = () => {
-    console.log('Leyendo usuario');
-    fs.readFile('citas.json', (err, data) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(JSON.parse(data));
-        }
+    checkFile();
+    const fileJson = fs.readFileSync(fileName, 'utf-8');
+    JSON.parse(fileJson).forEach(element => {
+        console.log(element);
     });
+    console.log("Total de citas: " + JSON.parse(fileJson).length);
 }
 
 module.exports = { registrar, leer };
