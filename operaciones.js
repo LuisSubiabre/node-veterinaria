@@ -1,16 +1,21 @@
 const fs = require('fs');
+const fileName = 'citas.json';
+
+const checkFile = () => {
+
+
+    if (!fs.existsSync(fileName)) {
+        // console.log('Archivo no encontrado, creando archivo');
+        fs.writeFileSync(fileName, '[]');
+    }
+
+}
 
 const registrar = (argumento) => {
 
+    checkFile();
 
-
-    // fs.open('citas.json ', 'r', (err, fd) => {
-    //     if (err) {
-    //         console.log('Archivo no encontrado, creando archivo');
-    //         fs.writeFileSync('citas.json', '[]');
-    //     }
-    // });
-    const data = fs.readFileSync('citas.json', 'utf-8');
+    const data = fs.readFileSync(fileName, 'utf-8');
     const nuevoObjeto = JSON.parse(data);
 
     const animal = [
@@ -26,7 +31,7 @@ const registrar = (argumento) => {
     nuevoObjeto.push(...animal);
 
 
-    fs.writeFileSync('citas.json', JSON.stringify(nuevoObjeto), (err) => {
+    fs.writeFileSync(fileName, JSON.stringify(nuevoObjeto), (err) => {
         if (err) {
             console.log(err);
         } else {
@@ -38,7 +43,8 @@ const registrar = (argumento) => {
 
 
 const leer = () => {
-    const fileJson = fs.readFileSync('citas.json', 'utf-8');
+    checkFile();
+    const fileJson = fs.readFileSync(fileName, 'utf-8');
     JSON.parse(fileJson).forEach(element => {
         console.log(element);
     });
