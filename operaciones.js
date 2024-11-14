@@ -1,9 +1,17 @@
 const fs = require('fs');
 
 const registrar = (argumento) => {
+
+
+
+    // fs.open('citas.json ', 'r', (err, fd) => {
+    //     if (err) {
+    //         console.log('Archivo no encontrado, creando archivo');
+    //         fs.writeFileSync('citas.json', '[]');
+    //     }
+    // });
     const data = fs.readFileSync('citas.json', 'utf-8');
     const nuevoObjeto = JSON.parse(data);
-    const newCita = { argumento };
 
     const animal = [
         {
@@ -30,19 +38,11 @@ const registrar = (argumento) => {
 
 
 const leer = () => {
-    console.log('Leyendo usuario');
-    // fs.readFile('citas.json', 'utf-8', (err, data) => {
-    //     if (err) {
-    //         console.log(err);
-    //     } else {
-    //         console.log(JSON.parse(data));
-    //     }
-    // })
-
     const fileJson = fs.readFileSync('citas.json', 'utf-8');
     JSON.parse(fileJson).forEach(element => {
         console.log(element);
     });
+    console.log("Total de citas: " + JSON.parse(fileJson).length);
 }
 
 module.exports = { registrar, leer };
